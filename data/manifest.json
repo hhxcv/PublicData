@@ -1,0 +1,15 @@
+{
+  "schema_version": "cloud-handoff-v1",
+  "generated_at": "2026-05-26T11:37:17.654110+08:00",
+  "timezone": "Asia/Shanghai",
+  "domains": {
+    "crypto": {
+      "latest_manifest": "crypto/latest/manifest.json",
+      "archive_manifest": "crypto/archive/2026/05/26/113717/manifest.json"
+    },
+    "ashare": {
+      "latest_manifest": "ashare/latest/manifest.json",
+      "archive_manifest": "ashare/archive/2026/05/26/113717/manifest.json"
+    }
+  }
+}

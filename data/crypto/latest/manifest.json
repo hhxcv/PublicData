@@ -1,0 +1,22 @@
+{
+  "schema_version": "cloud-handoff-v1",
+  "domain": "crypto",
+  "generated_at": "2026-05-26T11:37:17.654110+08:00",
+  "timezone": "Asia/Shanghai",
+  "files": [
+    "market-context.md",
+    "news-context.md"
+  ],
+  "report_contract": {
+    "writer": "ChatGPT web task",
+    "source_scope": "Only files listed in this manifest should be used as report inputs.",
+    "forbidden_report_content": [
+      "implementation details",
+      "file paths",
+      "collector status",
+      "fallback behavior",
+      "tests or commands",
+      "GitHub workflow internals"
+    ]
+  }
+}
