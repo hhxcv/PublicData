@@ -1,15 +1,12 @@
 {
   "schema_version": "cloud-handoff-v1",
-  "generated_at": "2026-05-27T01:04:26.706989+08:00",
+  "generated_at": "2026-05-27T08:30:32.653752+08:00",
   "timezone": "Asia/Shanghai",
+  "request_id": "ashare-codex-flow-test-202605270840",
   "domains": {
-    "crypto": {
-      "latest_manifest": "crypto/latest/manifest.json",
-      "archive_manifest": "crypto/archive/2026/05/27/010426/manifest.json"
-    },
     "ashare": {
       "latest_manifest": "ashare/latest/manifest.json",
-      "archive_manifest": "ashare/archive/2026/05/27/010426/manifest.json"
+      "archive_manifest": "ashare/archive/2026/05/27/083032/manifest.json"
     }
   }
 }
