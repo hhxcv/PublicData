@@ -74,7 +74,7 @@ jobs:
           from pathlib import Path
 
           path = Path(sys.argv[1])
-          payload = json.loads(path.read_text(encoding="utf-8"))
+          payload = json.loads(path.read_text(encoding="utf-8-sig"))
           domain = str(payload.get("domain") or "").strip().lower()
           if domain not in {"crypto", "ashare", "all"}:
               raise SystemExit(f"Unsupported request domain: {domain!r}")
