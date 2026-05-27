@@ -1,0 +1,7 @@
+﻿{
+  "schema_version": "cloud-handoff-request-v1",
+  "domain": "ashare",
+  "request_id": "ashare-codex-flow-test-202605270830",
+  "requested_at": "2026-05-27 08:30 Asia/Shanghai",
+  "report_path": "reports/ashare/2026-05-27-08.md"
+}
