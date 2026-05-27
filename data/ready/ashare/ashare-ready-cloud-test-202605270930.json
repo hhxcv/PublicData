@@ -1,16 +1,17 @@
 {
   "schema_version": "cloud-handoff-v1",
   "domain": "ashare",
+  "request_id": "ashare-ready-cloud-test-202605270930",
   "generated_at": "2026-05-27T09:24:44.774750+08:00",
   "timezone": "Asia/Shanghai",
-  "request_id": "ashare-ready-cloud-test-202605270930",
-  "files": [
-    "ashare-context.md"
+  "archive_manifest": "ashare/archive/2026/05/27/092444/manifest.json",
+  "context_files": [
+    "ashare/archive/2026/05/27/092444/ashare-context.md"
   ],
   "report_contract": {
     "writer": "ChatGPT web task",
     "output_language": "Simplified Chinese",
-    "source_scope": "Only files listed in this manifest should be used as report inputs.",
+    "source_scope": "Only context_files listed in this ready manifest should be used as report inputs.",
     "forbidden_report_content": [
       "implementation details",
       "file paths",

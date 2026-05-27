@@ -1,12 +1,12 @@
 {
   "schema_version": "cloud-handoff-v1",
-  "generated_at": "2026-05-27T09:18:26.813891+08:00",
+  "generated_at": "2026-05-27T09:24:44.774750+08:00",
   "timezone": "Asia/Shanghai",
-  "request_id": "ashare-2026-05-27-09",
+  "request_id": "ashare-ready-cloud-test-202605270930",
   "domains": {
     "ashare": {
       "latest_manifest": "ashare/latest/manifest.json",
-      "archive_manifest": "ashare/archive/2026/05/27/091826/manifest.json"
+      "archive_manifest": "ashare/archive/2026/05/27/092444/manifest.json"
     }
   }
 }
