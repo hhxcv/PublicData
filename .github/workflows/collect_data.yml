@@ -12,13 +12,13 @@ on:
           - all
           - crypto
           - ashare
-  schedule:
-    # Asia/Shanghai 09:00, 12:00, 21:00
-    - cron: "0 1,4,13 * * *"
-    # Asia/Shanghai 15:30
-    - cron: "30 7 * * *"
-    # Asia/Shanghai 00:00 crypto cycle
-    - cron: "0 16 * * *"
+      request_id:
+        description: Optional request id to persist in manifests
+        required: false
+        type: string
+  push:
+    paths:
+      - "requests/**"
 
 permissions:
   contents: write
@@ -31,6 +31,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: public-data
+          fetch-depth: 2
 
       - name: Checkout collector source
         uses: actions/checkout@v4
@@ -52,13 +53,54 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .
 
+      - name: Resolve collection request
+        id: request
+        working-directory: public-data
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            DOMAIN="${{ github.event.inputs.domain || 'all' }}"
+            REQUEST_ID="${{ github.event.inputs.request_id }}"
+          else
+            REQUEST_FILE="$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'requests/**' | grep '\.json$' | tail -n 1)"
+            if [ -z "$REQUEST_FILE" ] || [ ! -f "$REQUEST_FILE" ]; then
+              echo "No collection request file found."
+              exit 1
+            fi
+            python - "$REQUEST_FILE" <<'PY' > request.env
+          import json
+          import re
+          import sys
+          from pathlib import Path
+
+          path = Path(sys.argv[1])
+          payload = json.loads(path.read_text(encoding="utf-8"))
+          domain = str(payload.get("domain") or "").strip().lower()
+          if domain not in {"crypto", "ashare", "all"}:
+              raise SystemExit(f"Unsupported request domain: {domain!r}")
+          request_id = str(payload.get("request_id") or path.stem).strip()
+          if not re.fullmatch(r"[A-Za-z0-9_.:-]+", request_id):
+              raise SystemExit("request_id may only contain letters, numbers, underscore, dot, colon, or hyphen")
+          print(f"DOMAIN={domain}")
+          print(f"REQUEST_ID={request_id}")
+          PY
+            source request.env
+          fi
+          if [ -z "$REQUEST_ID" ]; then
+            REQUEST_ID="manual-$(date -u +%Y%m%d%H%M%S)"
+          fi
+          echo "domain=$DOMAIN" >> "$GITHUB_OUTPUT"
+          echo "request_id=$REQUEST_ID" >> "$GITHUB_OUTPUT"
+
       - name: Export public data
         working-directory: collector
         env:
           TZ: Asia/Shanghai
         run: |
-          DOMAIN="${{ github.event.inputs.domain || 'all' }}"
-          python -m crypto_monitor cloud-export --domain "$DOMAIN" --output-dir ../public-data/data
+          python -m crypto_monitor cloud-export \
+            --domain "${{ steps.request.outputs.domain }}" \
+            --request-id "${{ steps.request.outputs.request_id }}" \
+            --output-dir ../public-data/data
 
       - name: Commit changed data
         working-directory: public-data
